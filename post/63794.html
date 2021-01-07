@@ -1,0 +1,591 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/hockel/img/panda.png">
+  <link rel="icon" type="image/png" href="/hockel/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Hockel">
+  <meta name="keywords" content="">
+  <title>【python学习】python函数 - Hockel&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/hockel/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/hockel/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"gitee.com","root":"/hockel/","version":"1.8.7","typing":{"enable":true,"typeSpeed":100,"cursorChar":"❤","loop":true},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/hockel/js/utils.js" ></script>
+  <script  src="/hockel/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/hockel/">&nbsp;<strong>Hockel's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/hockel/img/2.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【python学习】python函数">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-04-16 20:03" pubdate>
+        2020年4月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      23
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【python学习】python函数</h1>
+            
+            <div class="markdown-body">
+              <h1 id="python函数"><a href="#python函数" class="headerlink" title="python函数"></a>python函数</h1><p><strong>函数说明文档</strong>：</p>
+<p>【定义函数说明文档】</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> 函数名（形参）:</span><br>	<span class="hljs-string">&#x27;&#x27;&#x27;说明文档位置&#x27;&#x27;&#x27;</span><span class="hljs-string">&#x27;</span><br><span class="hljs-string">	代码</span><br><span class="hljs-string">	。。。。。。</span><br></code></pre></td></tr></table></figure>
+<p>【查看函数的说明文档】</p>
+<p>help（函数名）</p>
+<p><strong>位置参数</strong>：在定义函数时，参数的名字和位置已被确认</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">abc</span>(<span class="hljs-params">姓名,年龄,性别</span>):</span><br>    print(<span class="hljs-string">f&#x27;您的姓名是<span class="hljs-subst">&#123;姓名&#125;</span>，性别<span class="hljs-subst">&#123;性别&#125;</span>，年龄<span class="hljs-subst">&#123;年龄&#125;</span>岁&#x27;</span>)<br>    <br>abc(<span class="hljs-string">&#x27;hockel&#x27;</span>,<span class="hljs-string">&#x27;男&#x27;</span>,<span class="hljs-number">25</span>)<br></code></pre></td></tr></table></figure>
+<p>函数名(‘hockel’,’男’,25）</p>
+<p><strong>关键字参数</strong>：传入实参是，明确形参变量名，参数之间**<em>不存在先后顺序**</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">abc</span>(<span class="hljs-params">姓名,年龄,性别</span>):</span><br>    print(<span class="hljs-string">f&#x27;您的姓名是<span class="hljs-subst">&#123;姓名&#125;</span>，性别<span class="hljs-subst">&#123;性别&#125;</span>，年龄<span class="hljs-subst">&#123;年龄&#125;</span>岁&#x27;</span>)<br>    <br>abc(<span class="hljs-string">&#x27;hockel&#x27;</span>,性别=<span class="hljs-string">&#x27;男&#x27;</span>,年龄=<span class="hljs-number">25</span>)<br></code></pre></td></tr></table></figure>
+<p>函数调用时，通过‘键=值’的形式加以指定，清除参数的顺序问题。</p>
+<p><strong>注意：调用函数时，如有位置参数，位置参数必需在关键字参数的前面，否则报错</strong></p>
+<p><strong>默认参数（缺省参数）：</strong>参数指定默认值，调用时不传入实参，就用 默认值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">abc</span>(<span class="hljs-params">姓名,年龄,性别=‘男’</span>):</span><br>    print(<span class="hljs-string">f&#x27;您的姓名是<span class="hljs-subst">&#123;姓名&#125;</span>，性别<span class="hljs-subst">&#123;性别&#125;</span>，年龄<span class="hljs-subst">&#123;年龄&#125;</span>岁&#x27;</span>)<br>    <br>abc(<span class="hljs-string">&#x27;hockel&#x27;</span>,<span class="hljs-number">25</span>)<br>abc(<span class="hljs-string">&#x27;joan&#x27;</span>,<span class="hljs-number">33</span>,性别=‘女’)<br></code></pre></td></tr></table></figure>
+<p><strong>可变参数（收集参数）：</strong></p>
+<p>1、位置可变参数（接受所有的位置参数，返回一个元组）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> 函数名(<span class="hljs-params">*args</span>):</span><br><br>​	print(args)<br>函数名（’hockel‘）     <span class="hljs-comment">#（‘hockel’）</span><br>函数名（‘Joan’，<span class="hljs-number">20</span>）   <span class="hljs-comment"># （‘Joan’，20）</span><br></code></pre></td></tr></table></figure>
+<p>2、关键字可变参数（接受所有的关键字，返回一个字典）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> 函数名(<span class="hljs-params">**kwargs</span>):</span><br>	print(kwargs)<br>	<br>函数名（姓名 = ‘hockel’，年龄=<span class="hljs-number">20</span>，性别=‘男“）<br></code></pre></td></tr></table></figure>
+
+<p>1、局部变量：定义在函数内部的变量，即只在函数内部生效</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> 函数名():</span><br>    a = <span class="hljs-number">520</span><br>    print(a)<br><br>函数名（）   <span class="hljs-comment">#调用函数</span><br>print(a)    <span class="hljs-comment">#报错！！！a 是内部变量，无法外部访问</span><br></code></pre></td></tr></table></figure>
+<p>2、全局变量：定义在函数外部的变量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-number">520</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> 函数名():</span><br><br>    print(a)<br><br>函数名（）   <span class="hljs-comment">#调用函数</span><br>print(a)    <br></code></pre></td></tr></table></figure>
+<p>3、在函数内部修改全局变量（global）</p>
+<p><strong>切记：不要轻易修改全局变量，除非万不得已！</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-number">520</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> 函数名（）：</span><br><span class="hljs-function">	<span class="hljs-title">global</span> <span class="hljs-title">a</span> #声明<span class="hljs-title">a</span> 为全局变量</span><br>	a = 1314<br>	print(a)<br>函数名（）  <span class="hljs-comment">#调用函数  1314</span><br></code></pre></td></tr></table></figure>
+<p>多函数程序执行流程：一般在实际开发过程中，一个程序往往由多个函数组成，并且多个函数共享某些数据</p>
+<p>多函数公用全局变量的流程、；</p>
+<p>1、声明全局变量</p>
+<p>2、定义两个函数</p>
+<p>3、函数1修改全局变量，函数2访问全局变量</p>
+<p>4、先调用函数1（函数1修改了全局变量），再调用函数2时就可以使用修改后的全局变量了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-number">1314</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">name1</span>():</span><br>	<span class="hljs-keyword">global</span> a    <span class="hljs-comment">#声明a 是一个全局变量 就是外部变量</span><br>    a = <span class="hljs-number">520</span><br>    <br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">name2</span>():</span><br>    print(a)<br>    <br>name1()<br>name2()<br>    <br></code></pre></td></tr></table></figure>
+<p><strong>函数返回值：return</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">def 函数名（a,b):			#多个返回值写成 return a,b 返回是一个元组（a,b)<br>    <span class="hljs-keyword">return</span> a + b			<span class="hljs-comment">#return后面可以连接列表，元组或者字典也能返回多个返回值</span><br>							<span class="hljs-comment">#遇到rerun退出当前函数</span><br>变量名 = 函数名（<span class="hljs-number">520</span>，<span class="hljs-number">1314</span>）<br>print(变量名)<br><span class="hljs-comment">#如果这里有多条return语句执行第一个</span><br><br></code></pre></td></tr></table></figure>
+<p><strong>多函数返回值做参数传递</strong>：</p>
+<p>1.定义函数1，return返回一个值</p>
+<p>2、定义带形参的函数2，打印形参</p>
+<p>3、将调用函数1的返回值，赋值给一个 变量。列如：变量名 = 函数名1（）</p>
+<p>4、调用函数2，用刚才的变量做参数 列如：函数名2（变量名）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">name1</span>():</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">520</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">name</span>(<span class="hljs-params">a</span>):</span><br>    print(a)<br>b = name1()<br>name(b)<br></code></pre></td></tr></table></figure>
+<p><strong>元组 拆包</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> 函数名():</span><br>    retrun <span class="hljs-number">520</span>,<span class="hljs-number">1314</span><br><br>a,b = 函数名()<br>print(a)<br>print(b)<br></code></pre></td></tr></table></figure>
+<p>字典拆包</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">c = &#123;<span class="hljs-string">&#x27;姓名&#x27;</span> : <span class="hljs-string">&#x27;hockel&#x27;</span>,<span class="hljs-string">&#x27;年龄&#x27;</span>：<span class="hljs-number">20</span>&#125; <br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">name</span>():</span><br>    <span class="hljs-keyword">return</span> c<br><br>a,b = name()<br>print(a,b)    <span class="hljs-comment">#打印键</span><br>print(c[a])   <span class="hljs-comment">#打印值</span><br>print(c[b])<br></code></pre></td></tr></table></figure>
+<p>什么是递归？递归背部自己调用自己，必需留有出口。（套娃）</p>
+<p>实例：1+2+3+4+5…..+100</p>
+<p>把它看成：100+99+98+….+1</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> 函数名(<span class="hljs-params">形参</span>):</span><br>    <span class="hljs-keyword">if</span> 形参 == <span class="hljs-number">1</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br>    结果 = 形参 + 函数名(形参 - <span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">return</span> 结果<br>变量名 = 函数名(<span class="hljs-number">100</span>)<br>print(变量名)<br></code></pre></td></tr></table></figure>
+<p>遇到return：（1）返回值（2）退出当前函数</p>
+<p><strong>函数式编程是一种古老的编程模式，就是用函数来表示程序，用函数的组合来表达组合的思维方式</strong></p>
+<h2 id="函数编程之lambda表达式"><a href="#函数编程之lambda表达式" class="headerlink" title="函数编程之lambda表达式"></a>函数编程之lambda表达式</h2><p>1、什么时候用lambda表达式？</p>
+<p>当函数有一个返回值，且只有一句代码，可以用lambda简写</p>
+<p>2、lambda语法</p>
+<p><code>lambda 形参：表达式</code></p>
+<p><strong>注意</strong></p>
+<p>1，形参可以省略，函数的参数在lambda中也适用</p>
+<p>2、lambda函数能接受任何数量的参数但只能返回一个表达式的值</p>
+<p>函数与lambda表达式对比：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span>():</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">520</span><br><br>print(func())<br>func = <span class="hljs-keyword">lambda</span>:<span class="hljs-number">520</span><br>print(func())<br>print((<span class="hljs-keyword">lambda</span>:<span class="hljs-number">520</span>)())<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func1</span>(<span class="hljs-params">a,b</span>):</span><br>    <span class="hljs-keyword">return</span> a + b<br><br>result = func1(<span class="hljs-number">520</span>,<span class="hljs-number">1314</span>)<br>print(result)<br>print((<span class="hljs-keyword">lambda</span> a,b: a+b)(<span class="hljs-number">520</span>,<span class="hljs-number">1314</span>))<br></code></pre></td></tr></table></figure>
+<p>lambda参数形式：</p>
+<p>1，无参数  <code>lambda:520()</code></p>
+<p>2，一个参数   <code>(lambda a:a)(520)</code></p>
+<p>3、默认参数   <code>（lamda a,b,c = a + b+ c)(2,6)</code></p>
+<p>4、可变位置参数  <code>(lambda *args = args)(1,2,3)</code>  返回一个元组</p>
+<p>5、可变关键字参数 <code>（lambda **kwargs = kwargs)(a=1,b=2)</code>返回的只一个字典</p>
+<p>带（判断）条件语句的lambda：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span>(<span class="hljs-params">a,b</span>):</span><br>    <span class="hljs-keyword">return</span> a <span class="hljs-keyword">if</span> a&gt;b <span class="hljs-keyword">else</span> b<br><br>print(func(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>))<br>(<span class="hljs-keyword">lambda</span> a,b :a <span class="hljs-keyword">if</span> a &gt; b <span class="hljs-keyword">else</span> b)(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+<p>列表中的字典数据排序：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">dict1 = [&#123;<span class="hljs-string">&#x27;姓名&#x27;</span> : <span class="hljs-string">&#x27;hockel&#x27;</span>,<span class="hljs-string">&#x27;年龄&#x27;</span>：<span class="hljs-number">20</span>&#125;，&#123;<span class="hljs-string">&#x27;姓名&#x27;</span> : <span class="hljs-string">&#x27;jack&#x27;</span>,<span class="hljs-string">&#x27;年龄&#x27;</span>：<span class="hljs-number">20</span>&#125; ，&#123;<span class="hljs-string">&#x27;姓名&#x27;</span> : <span class="hljs-string">&#x27;tom&#x27;</span>,<span class="hljs-string">&#x27;年龄&#x27;</span>：<span class="hljs-number">20</span>&#125;]<br>dict1.sort(key= <span class="hljs-keyword">lambda</span> x:x[<span class="hljs-string">&#x27;姓名&#x27;</span>]，reverse = <span class="hljs-literal">True</span>)<br>print(dict1)<br></code></pre></td></tr></table></figure>
+<h2 id="编程式编程之高阶函数"><a href="#编程式编程之高阶函数" class="headerlink" title="编程式编程之高阶函数"></a>编程式编程之高阶函数</h2><p>高阶函数：就是基于已有的函数定义新函数，以函数作为参数，返回也是函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span>(<span class="hljs-params">a,b</span>):</span>  <span class="hljs-comment">#普通函数</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">abs</span>(a)+ <span class="hljs-built_in">abs</span>(b)<br>result = func(-<span class="hljs-number">5</span>,<span class="hljs-number">3</span>)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func1</span>(<span class="hljs-params">a,b,c</span>):</span><br>    <span class="hljs-keyword">return</span> c(a) + c(b)<br>result = func1(-<span class="hljs-number">5</span>,<span class="hljs-number">3</span>,<span class="hljs-built_in">abs</span>)<br></code></pre></td></tr></table></figure>
+<h2 id="函数式编程之内置高阶函数"><a href="#函数式编程之内置高阶函数" class="headerlink" title="函数式编程之内置高阶函数"></a>函数式编程之内置高阶函数</h2><p>1，filter(函数名，可迭代对象) 作用：过渡序列中不符合条件的元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">list1 = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>]<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-keyword">return</span> x % <span class="hljs-number">2</span> == <span class="hljs-number">0</span><br>result = <span class="hljs-built_in">filter</span>(func,list1)<br>print(result) <span class="hljs-comment"># 打印的是对象地址</span><br>print(<span class="hljs-built_in">list</span>[result])<br><br><br><span class="hljs-built_in">filter</span>(<span class="hljs-keyword">lambda</span> x :x % <span class="hljs-number">2</span>,<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,<span class="hljs-number">11</span>))<br></code></pre></td></tr></table></figure>
+<p><strong>注</strong></p>
+<p>filter有两个参数，第一个参数可以是函数，也可以是None</p>
+<p>当第一个参数是函数的时候，将第二个参数中每一个元素进行计算。</p>
+<p>当第一个参数是none时，直接将第二个参数中True 的值赛选出来</p>
+<p>2、.map(函数名，迭代对象)</p>
+<p>作用：将可迭代对象的每一个元素作为函数的参数进行运算加工，直到可迭代序列每个元素都加工完毕。</p>
+<p>计算列表元素中各个数字的2次方</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">dict1 = [<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,<span class="hljs-number">5</span>)]<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span>(<span class="hljs-params">x</span>):</span><br>    <span class="hljs-keyword">return</span> x ** <span class="hljs-number">2</span><br>result = <span class="hljs-built_in">map</span>(func,dict1)<br>print(result)  <span class="hljs-comment">#打印出来的是地址对象的地址</span><br>print(<span class="hljs-built_in">list</span>(result)) <span class="hljs-comment"># 数据转换</span><br><br><span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>( <span class="hljs-keyword">lambda</span> x: x **<span class="hljs-number">2</span>,dict1))<br></code></pre></td></tr></table></figure>
+<p>3、reduce(函数名（x,y),可迭代对象）</p>
+<p>作用：函数中必需有连个参数，每个函数计算的结果继续和序列的写一个元素做累积计算</p>
+<p>计算 下列数据之和</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> functools<br>list1 = [<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,<span class="hljs-number">5</span>)]<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">func</span>(<span class="hljs-params">a,b</span>):</span><br>    <span class="hljs-keyword">return</span> a + b<br>result = functools.reduce(func,list1)<br><br>functools,reduce(<span class="hljs-keyword">lambda</span> x, y : x + y , list1)<br></code></pre></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/hockel/categories/Python%E5%AD%A6%E4%B9%A0/">Python学习</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/hockel/tags/Python/">Python</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/hockel/post/13983.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【python学习】-字符串和正则表达式</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/hockel/post/12264.html">
+                        <span class="hidden-mobile">【python学习】-图形用户界面和游戏开发</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('twikoo', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/twikoo@0.1.15/dist/twikoo.all.min.js', function () {
+        twikoo.init({ envId: 'hockel-1018a9' })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/hockel/js/debouncer.js" ></script>
+<script  src="/hockel/js/events.js" ></script>
+<script  src="/hockel/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/hockel/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/hockel/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/hockel/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/hockel/js/boot.js" ></script>
+
+
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>

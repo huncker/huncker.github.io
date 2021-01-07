@@ -1,0 +1,541 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/hockel/img/panda.png">
+  <link rel="icon" type="image/png" href="/hockel/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Hockel">
+  <meta name="keywords" content="">
+  <title>【MaixPy教程】用maixHub训练模型进行开源硬件识别 - Hockel&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/hockel/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/hockel/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"gitee.com","root":"/hockel/","version":"1.8.7","typing":{"enable":true,"typeSpeed":100,"cursorChar":"❤","loop":true},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/hockel/js/utils.js" ></script>
+  <script  src="/hockel/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/hockel/">&nbsp;<strong>Hockel's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/hockel/img/2.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【MaixPy教程】用maixHub训练模型进行开源硬件识别">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-05-06 22:18" pubdate>
+        2020年5月6日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【MaixPy教程】用maixHub训练模型进行开源硬件识别</h1>
+            
+            <div class="markdown-body">
+              <h1 id="【MaixPy教程】用maixHub训练模型进行开源硬件识别"><a href="#【MaixPy教程】用maixHub训练模型进行开源硬件识别" class="headerlink" title="【MaixPy教程】用maixHub训练模型进行开源硬件识别"></a>【MaixPy教程】用maixHub训练模型进行开源硬件识别</h1><p><img src="https://img-blog.csdnimg.cn/20200423205029980.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>年前参加了dfrobot的活动：<strong>DF冬季AI挑战赛</strong>有幸进入第二轮，大方的木子给了200的优惠券。在逛了DF商城时候无意间发现了一个宝贝：<a target="_blank" rel="noopener" href="https://www.dfrobot.com.cn/goods-1993.html">Maix Dock AI开发板</a>！又有液晶屏和摄像头！！<strong>难道它不香吗？现在想想它是真的香</strong><br><img src="https://img-blog.csdnimg.cn/20200423205115962.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200423205115754.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br>它是基于k210 AI芯片，作为核心处理单元，k210带独立FPU的双核处理，64位的CPU位宽，8M的片上SRAM，400M的可调标称频率，支持乘法、除法和平方根运算的双精度FPU，在AI处理方面k210可进行卷积、批归一化、激活、池化等运算。也可以进行语音方向扫描和语音数据输出的前置处理工作，可实现人脸检测，语音识别，颜色、物体识别，MNIST手写数字识别，Feature map显示，tiny yolov2 20分类等多种功能。<br><strong>什么是K210 AI芯片呢？</strong>可以看一下大神稚辉君的帖子：<a target="_blank" rel="noopener" href="https://mc.dfrobot.com.cn/thread-299778-1-1.html">嵌入式AI从入门到放肆【K210篇】– 硬件与环境 </a>想要详细了解MaixPy的资料可以查看：<a target="_blank" rel="noopener" href="https://www.sipeed.com/">矽速科技官网</a><br><strong>好了废话不多说了，开始本次的教程</strong></p>
+<h2 id="硬件准备"><a href="#硬件准备" class="headerlink" title="硬件准备"></a>硬件准备</h2><ul>
+<li>刷入MaixPy的最新固件的K210开发板这里推荐<a target="_blank" rel="noopener" href="https://www.dfrobot.com.cn/goods-1993.html">Maix Dock</a></li>
+<li>一根TypeC数据线</li>
+<li>TF卡及读卡器</li>
+</ul>
+<h2 id="准备数据集"><a href="#准备数据集" class="headerlink" title="准备数据集"></a>准备数据集</h2><p>1、用手机拍摄我们的arduino、microbit、掌控板、树莓派的图片（ps:识别的准确定和我们的数据集的大小有关）：<br><img src="https://img-blog.csdnimg.cn/20200423205152467.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<h2 id="数据集处理"><a href="#数据集处理" class="headerlink" title="数据集处理"></a>数据集处理</h2><p>将图片数据集按分类保存为单独的文件夹, 子目录的名字为最后生成label的名字。<br><strong>注意：分类文件夹数量要大于 2个！</strong><br>例如:</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs 1c">数据集文件目录结构<br>   <span class="hljs-string">|-Dir_name</span><br>     <span class="hljs-string">|-Class_1</span><br>       <span class="hljs-string">|- pic01.jpg</span><br>       <span class="hljs-string">|- pic02.jpg</span><br>       <span class="hljs-string">|- pic03.jpg</span><br>      <span class="hljs-string">|-Class_2</span><br>       <span class="hljs-string">|- pic01.jpg</span><br>       <span class="hljs-string">|- pic02.jpg</span><br>       <span class="hljs-string">|- pic03.jpg</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20200423205218210.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>2、使用转换工具处理文件夹<br>工具下载地址:<a target="_blank" rel="noopener" href="https://cdn.sipeed.com/donwload/12kj346465hjkv68g7c/DataAssitantV1.0.zip?attname=">预处理软件</a><br>1.将预处理软件下载完成之后，解压后点击.exe文件即可使用<br><img src="https://img-blog.csdnimg.cn/20200423205317166.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>选择文件夹确定即可<br><img src="https://img-blog.csdnimg.cn/20200423205341390.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>选择我们准备好的数据集<br><img src="https://img-blog.csdnimg.cn/20200423205402106.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>执行完成后会生成zip文件(这个之后我们在模型训练的网站上会有用到)<br><img src="https://img-blog.csdnimg.cn/20200423205424737.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>*<em>注意:<br>建议的图片分辨率 224</em>224, 上传之前可以使用工具批量转换一下<br>每个分类不要低于40张图片，否则无法开始训练<br>数据集压缩后大小不超过20M<br>子目录名不能使用汉字， 否则生成的label无法显示**</p>
+<h2 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h2><h3 id="获取机器码"><a href="#获取机器码" class="headerlink" title="获取机器码"></a>获取机器码</h3><p>1、下载key_gen固件 <a target="_blank" rel="noopener" href="https://en.bbs.sipeed.com/uploads/default/original/1X/bca0832bed92a1ada63bd05327688784e2ef14d1.zip">key_gen_v1.2.zip </a><br>2、下载kflash-gui<a target="_blank" rel="noopener" href="https://github.com/Sipeed/kflash_gui/releases"> kflash-gui</a><br>3、使用kflash-gui 烧录 key_gen 固件<br><img src="https://img-blog.csdnimg.cn/20200423205504469.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>4、打开串口终端（Xcom）， 重启开发板， 可以看到打印出的机器码。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs markdown">Please Send Bellow Data to Sipeed --&gt; support@sipeed.com:<br><br>6f80dccbe29<span class="hljs-strong">****</span><span class="hljs-strong">****</span><span class="hljs-strong">**cc7e9d69f92</span><br><span class="hljs-strong"></span><br><span class="hljs-strong">Generate key end</span><br><span class="hljs-strong"></span><br><span class="hljs-strong">其中 6f80dccbe29**</span><span class="hljs-strong">****</span><span class="hljs-strong">****</span>cc7e9d69f92 就是对应开发板的机器码<br></code></pre></td></tr></table></figure>
+<p><strong><em>警告：由于需要进行模型加密，key_gen.bin将永远关闭JTAG端口，并写入一次性AES KEY，请确认后再进行烧录。</em></strong></p>
+<h2 id="提交训练任务"><a href="#提交训练任务" class="headerlink" title="提交训练任务"></a>提交训练任务</h2><p>1、打开<a target="_blank" rel="noopener" href="https://www.maixhub.com/index.php/index/mtrain/index.html">Maixhub模型训练平台</a>并创建一个任务<br><img src="https://img-blog.csdnimg.cn/20200423205532975.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p><strong>在填写邮箱处填写接受模型的邮箱在填写机器码处填写机器码</strong><br>2、上传数据集，选择我们前面准备好的数据集<br><img src="https://img-blog.csdnimg.cn/20200423205551677.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>3、进行数据训练，训练的时间和我们的数据集大小有关<br><img src="https://img-blog.csdnimg.cn/20200423205618133.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>训练好后，我们的邮箱会接受的我们的训练模型：<br><img src="https://img-blog.csdnimg.cn/20200423205638578.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>这里可以看到我的准确度还是比较低的。我们下载并解压下来可以看到下面这个文件：<br><img src="https://img-blog.csdnimg.cn/20200423205657120.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>里面有我们的的数据模型，和我们模式的一些准确度、损失度等信息<br><img src="https://img-blog.csdnimg.cn/20200423205736151.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200423205751911.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200423205751209.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<h2 id="烧录模型到flash"><a href="#烧录模型到flash" class="headerlink" title="烧录模型到flash"></a>烧录模型到flash</h2><p>模型有两种使用方式， 可以使用sd卡或烧录flash的方式来运行模型脚本。</p>
+<h3 id="使用sd卡"><a href="#使用sd卡" class="headerlink" title="使用sd卡"></a>使用sd卡</h3><figure class="highlight stan"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stan"><span class="hljs-number">1</span>、烧录最新Maixpy固件<br><span class="hljs-number">2</span>、将邮件中的zip 解压<br><span class="hljs-number">3</span>、将所有文件放到<span class="hljs-built_in">sd</span>卡根目录<br><span class="hljs-number">4</span>、将<span class="hljs-built_in">sd</span>卡插到开发板上， 重启开发板<br></code></pre></td></tr></table></figure>
+<h3 id="烧录模型到flash-1"><a href="#烧录模型到flash-1" class="headerlink" title="烧录模型到flash"></a>烧录模型到flash</h3><p>1、打开 kflash-gui, 选择解压出的kfpkg文件（模型内自带maixpy 固件，不需要单独烧录）<br><img src="https://img-blog.csdnimg.cn/20200423205809526.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<h2 id="程序的编写"><a href="#程序的编写" class="headerlink" title="程序的编写"></a>程序的编写</h2><p>在邮件中的训练模型解压文件中，有boot.py，就是我们的识别模型程序了，我们现在用<a target="_blank" rel="noopener" href="http://dl.sipeed.com/MAIX/MaixPy/ide/">MaixPY IDE</a>打开（具体使用操作及相关API文档可以<a target="_blank" rel="noopener" href="https://maixpy.sipeed.com/zh/">参考官方wiki</a>）：<br><img src="https://img-blog.csdnimg.cn/20200423205838819.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># refer to http://blog.sipeed.com/p/680.html</span><br><span class="hljs-attribute">import</span> sensor, image, lcd, time<br><span class="hljs-attribute">import</span> KPU as kpu<br><span class="hljs-attribute">lcd</span>.init()<br><span class="hljs-attribute">lcd</span>.clear()<br><span class="hljs-comment">#lcd.mirror(1)</span><br><span class="hljs-attribute">try</span>:<br>    <span class="hljs-attribute">img</span> = image.Image(<span class="hljs-string">&quot;/sd/startup.jpg&quot;</span>)<br>    <span class="hljs-attribute">lcd</span>.display(img)<br><span class="hljs-attribute">except</span>:<br>    <span class="hljs-attribute">lcd</span>.draw_string(lcd.width()//<span class="hljs-number">2</span>-<span class="hljs-number">100</span>,lcd.height()//<span class="hljs-number">2</span>-<span class="hljs-number">4</span>, <span class="hljs-string">&quot;Error: Cannot find startup.jpg&quot;</span>, lcd.WHITE, lcd.RED)<br><br><span class="hljs-attribute">sensor</span>.reset()<br><span class="hljs-attribute">sensor</span>.set_pixformat(sensor.RGB<span class="hljs-number">565</span>)<br><span class="hljs-attribute">sensor</span>.set_framesize(sensor.QVGA)<br><span class="hljs-attribute">sensor</span>.set_windowing((<span class="hljs-number">224</span>, <span class="hljs-number">224</span>))<br><span class="hljs-attribute">sensor</span>.set_vflip(<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sensor</span>.set_hmirror(<span class="hljs-number">0</span>)<br><br><span class="hljs-attribute">sensor</span>.run(<span class="hljs-number">1</span>)<br><span class="hljs-attribute">f</span>=open(&#x27;/sd/labels.txt&#x27;,&#x27;r&#x27;)<br><span class="hljs-attribute">labels</span>=f.readlines()<br><span class="hljs-attribute">f</span>.close()<br><span class="hljs-attribute">task</span> = kpu.load(&#x27;/sd/f<span class="hljs-number">1</span>ba<span class="hljs-number">58</span>e<span class="hljs-number">5</span>f<span class="hljs-number">3</span>d<span class="hljs-number">2011</span>d<span class="hljs-number">3320</span>a<span class="hljs-number">4</span>fd<span class="hljs-number">0</span>cd<span class="hljs-number">2</span>ca<span class="hljs-number">69</span>_<span class="hljs-number">813835</span>c<span class="hljs-number">56</span>cbfc<span class="hljs-number">4</span>cfaf<span class="hljs-number">63052</span>b<span class="hljs-number">70</span>ba<span class="hljs-number">2</span>c<span class="hljs-number">6</span>e.smodel&#x27;)<br><span class="hljs-attribute">lcd</span>.clear(<span class="hljs-number">0</span>xFFFF)<br><span class="hljs-attribute">clock</span> = time.clock()<br><span class="hljs-attribute">while</span>(True):<br>    <span class="hljs-attribute">img</span> = sensor.snapshot()<br>    <span class="hljs-attribute">clock</span>.tick()<br>    <span class="hljs-attribute">fmap</span> = kpu.forward(task, img)<br>    <span class="hljs-attribute">fps</span>=clock.fps()<br>    <span class="hljs-attribute">plist</span>=fmap[:]<br>    <span class="hljs-attribute">pmax</span>=max(plist)<br>    <span class="hljs-attribute">max_index</span>=plist.index(pmax)<br>    <span class="hljs-attribute">a</span> = lcd.display(img, oft=(<span class="hljs-number">48</span>,<span class="hljs-number">0</span>))<br>    <span class="hljs-attribute">lcd</span>.draw_string(<span class="hljs-number">48</span>, <span class="hljs-number">224</span>, <span class="hljs-string">&quot;%.2f:%s                            &quot;</span>%(pmax, labels[max_index].strip()))<br>    <span class="hljs-attribute">print</span>(fps)<br><span class="hljs-attribute">a</span> = kpu.deinit(task)<br><br></code></pre></td></tr></table></figure>
+<h2 id="程序演示"><a href="#程序演示" class="headerlink" title="程序演示"></a>程序演示</h2><iframe src="//player.bilibili.com/player.html?aid=795563096&bvid=BV12C4y1W7e8&cid=189013858&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="min-height:600px;width:100%;height:100%;"> </iframe>
+
+
+
+
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/hockel/categories/MaixPy/">MaixPy</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/hockel/tags/MaixPy/">MaixPy</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/hockel/post/1.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/hockel/post/41282.html">
+                        <span class="hidden-mobile">【MaixPy 教程】用mixly玩转K210——人脸追踪</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('twikoo', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/twikoo@0.1.15/dist/twikoo.all.min.js', function () {
+        twikoo.init({ envId: 'hockel-1018a9' })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/hockel/js/debouncer.js" ></script>
+<script  src="/hockel/js/events.js" ></script>
+<script  src="/hockel/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/hockel/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/hockel/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/hockel/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/hockel/js/boot.js" ></script>
+
+
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>

@@ -1,0 +1,523 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/hockel/img/panda.png">
+  <link rel="icon" type="image/png" href="/hockel/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Hockel">
+  <meta name="keywords" content="">
+  <title>【MaixPy教程】用mixly玩转K210——调用AI_OneNET API实现车牌识别 - Hockel&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/hockel/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/hockel/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"gitee.com","root":"/hockel/","version":"1.8.7","typing":{"enable":true,"typeSpeed":100,"cursorChar":"❤","loop":true},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/hockel/js/utils.js" ></script>
+  <script  src="/hockel/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/hockel/">&nbsp;<strong>Hockel's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/hockel/img/2.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【MaixPy教程】用mixly玩转K210——调用AI_OneNET API实现车牌识别">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-05-05 21:40" pubdate>
+        2020年5月5日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      16
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【MaixPy教程】用mixly玩转K210——调用AI_OneNET API实现车牌识别</h1>
+            
+            <div class="markdown-body">
+              <h1 id="【MaixPy教程】用mixly玩转K210——调用AI-OneNET-API实现车牌识别"><a href="#【MaixPy教程】用mixly玩转K210——调用AI-OneNET-API实现车牌识别" class="headerlink" title="【MaixPy教程】用mixly玩转K210——调用AI-OneNET API实现车牌识别"></a>【MaixPy教程】用mixly玩转K210——调用AI-OneNET API实现车牌识别</h1><p><img src="https://img-blog.csdnimg.cn/20200425205306654.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>【MaixPy系列教程：】</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/tonycarson/article/details/105717060">【MaixPy教程】用maixHub训练模型进行开源硬件识别</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/tonycarson/article/details/105744677">【MaixPy 教程】用mixly玩转K210——口罩识别</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/tonycarson/article/details/105808550">【MaixPy 教程】用mixly玩转K210——人脸追踪</a><h3 id="什么是oneNET-AI，他可以做什么？"><a href="#什么是oneNET-AI，他可以做什么？" class="headerlink" title="什么是oneNET  AI，他可以做什么？"></a>什么是oneNET  AI，他可以做什么？</h3>人工智能与物联网的融合带来的是一个全新的时代。这个时代，人与人的连接、人与物的连接、物与物的连接都将被全面赋能，人工智能+物联网的化学反应，将深度赋能时代。<br>作为国内三大运营商物联网开放平台中首个上线的人工智能开放平台，中国移动OneNET AI将解锁更多行业、更多场景的物联网应用，让应用智能化“无处不在”。<br>OneNET AI 提供人脸识别、图像识别、图像处理和视频处理等全方位的AI能力，同时通过应用封装，提供更贴近用户的解决方案.<br><img src="https://img-blog.csdnimg.cn/20200425210746825.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><h3 id="如何申请OneNET账户？"><a href="#如何申请OneNET账户？" class="headerlink" title="如何申请OneNET账户？"></a>如何申请OneNET账户？</h3>流程如下：<br><img src="https://img-blog.csdnimg.cn/2020042521251219.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></li>
+</ul>
+<p>1.用户注册登录<br>进入<a target="_blank" rel="noopener" href="https://open.iot.10086.cn/ai/index.html">OneNET AI平台首页</a><br>，点击顶部导航栏右侧注册，将跳转到OneNET平台注册界面，填写相关信息完成用户注册。<br><img src="https://img-blog.csdnimg.cn/20200425212713670.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200425212725298.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br>首次使用，注册成功后即可登录平台。在OneNET AI平台首页，点击顶部导航栏右侧登录，进入登录页面，输入账号、密码、验证码进行登录。<br><img src="https://img-blog.csdnimg.cn/20200425212823871.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200425212845878.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br>2.实名认证<br>通过实名认证的新用户即可申请使用API调用权限。<br>完成账号注册后，需登录OneNET平台，点击头像下拉菜单“实名认证”进入实名认证页面，进行实名认证操作。<br>温馨提示：实名认证方式分为企业和个人两种类型，可根据自己的需要选择认证方式；已经认证为个人的用户可升级成为企业；<br>3.API调用权限申请<br>完成实名认证的用户可根据页面提示，进行API调用权限开通。您可以提交申请单等待客服人员的审核；或者按照页面提供的联系方式主动联系客服人员，快速开通API调用权限。<br><img src="https://img-blog.csdnimg.cn/20200425213101388.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200425213101218.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200425213101146.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2020042521310199.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>4.API调用<br>目前AI产品主要开放了REST API形式的服务，你可以点击平台主页「帮助文档」-「技术文档」目录下的各技术服务文档，查看具体使用方法及参数。<br>在您正式调用AI能力之前，请先通过用户鉴权方法获取Login Token，便于后续调用各项AI能力，方法详见用户鉴权文档。<br>温馨提示：Login Token的有效期为24小时，请您调用时注意在程序中定期请求新的token。</p>
+<h2 id="编写程序"><a href="#编写程序" class="headerlink" title="编写程序"></a>编写程序</h2><p>打开我们的mixly找到人工智能模块可以看到有关AI_OneNET的积木块：<br><img src="https://img-blog.csdnimg.cn/20200425213637573.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br>在阅读OneNET AI平台的帮助文档，要用人工智能的API首先要获得用户鉴定权（也就是token）<br><img src="https://img-blog.csdnimg.cn/20200425214141527.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br>如果用python来写一个请求示例代码要这么多代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> requests<br><span class="hljs-keyword">import</span> json<br><span class="hljs-keyword">import</span> base64<br><span class="hljs-keyword">import</span> random<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SimpleEncode</span>():</span><br>    keyStr = <span class="hljs-string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz~!@#$%^&amp;*()_+-=&#123;&#125;[]:;&lt;,&gt;.?/|&quot;</span><br>    keyLength = <span class="hljs-built_in">len</span>(keyStr)<br>    encryptionA = <span class="hljs-number">17</span><br>    encryptionB = <span class="hljs-number">8</span><br>    decodeA = <span class="hljs-number">0</span><br>    preCountMax = <span class="hljs-number">15</span><br>    postCount = <span class="hljs-number">5</span><br>    randomChar = <span class="hljs-string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop&quot;</span><br>    randomCharLength = <span class="hljs-built_in">len</span>(randomChar)<br>    <span class="hljs-comment">#base64字符</span><br>    ALPHABET = <span class="hljs-string">&quot;ABCDEFGHIJKLMN0123456789OPQRSTUVWXYZ+/abcdefghijklmnopqrstuvwxyz&quot;</span><br>    STANDARD = <span class="hljs-string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&quot;</span>  <span class="hljs-comment"># 标准的字符串索引</span><br><br>    <span class="hljs-comment">#找到密钥</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,keyLength):<br>            <span class="hljs-keyword">if</span> (encryptionA * i) % keyLength == <span class="hljs-number">1</span>:<br>                decodeA = i<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">base64Encode</span>(<span class="hljs-params">self,sourceStr</span>):</span><br>        encode = <span class="hljs-string">&quot;&quot;</span><br>        <span class="hljs-keyword">for</span> ch <span class="hljs-keyword">in</span> base64.b64encode(sourceStr.encode()).decode():<br>            <span class="hljs-keyword">if</span> ch == <span class="hljs-string">&#x27;=&#x27;</span>:<br>                encode += <span class="hljs-string">&#x27;=&#x27;</span><br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>):<br>                    <span class="hljs-keyword">if</span> ch == self.STANDARD[i]:<br>                        encode += self.ALPHABET[i]<br>        <span class="hljs-keyword">return</span> encode<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">encrpyt</span>(<span class="hljs-params">self,sourceStr</span>):</span><br>        srcLength = <span class="hljs-built_in">len</span>(sourceStr)<br>        <span class="hljs-comment">#先加入干扰字符的数量</span><br>        addCharCount = random.randint(<span class="hljs-number">1</span>,self.preCountMax) <span class="hljs-keyword">if</span> srcLength &lt; self.preCountMax <span class="hljs-keyword">else</span> <span class="hljs-number">0</span><br>        <span class="hljs-comment">#随机字符</span><br>        sb = <span class="hljs-built_in">str</span>(addCharCount)+<span class="hljs-string">&quot;|&quot;</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(addCharCount):<br>            sb += self.randomChar[random.randint(<span class="hljs-number">0</span>,self.randomCharLength-<span class="hljs-number">1</span>)]<br><br>        sb += sourceStr<br>        <span class="hljs-comment">#尾部固定增加x个字符</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.postCount):<br>            sb += self.randomChar[random.randint(<span class="hljs-number">0</span>,self.randomCharLength-<span class="hljs-number">1</span>)]<br><br>        <span class="hljs-comment">#base64 加密</span><br>        base64Str = self.base64Encode(sb)<br><br>        destStr = <span class="hljs-string">&#x27;&#x27;</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(base64Str)):<br>            <span class="hljs-comment">#找到字符所在位置</span><br>            position = self.keyStr.find(base64Str[i])<br><br>            <span class="hljs-comment">#对字符进行转换</span><br>            y = (self.encryptionA * position + self.encryptionB) % self.keyLength<br><br>            <span class="hljs-comment">#找到替换后的字符</span><br><br>            destStr += self.keyStr[y]<br><br>        <span class="hljs-keyword">return</span> destStr<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    url = <span class="hljs-string">&#x27;http://ai.heclouds.com:9090/v1/user/oneNetLogin&#x27;</span><br>    headers = &#123;<br>        <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/json&#x27;</span>,<br>    &#125;<br>    account = <span class="hljs-string">&#x27;&#x27;</span>  <span class="hljs-comment"># 用户名</span><br>    password = <span class="hljs-string">&#x27;&#x27;</span>  <span class="hljs-comment"># 用户密码</span><br>    simpleencode = SimpleEncode()<br>    data = &#123;<span class="hljs-string">&#x27;account&#x27;</span>: account, <span class="hljs-string">&#x27;password&#x27;</span>: simpleencode.encrpyt(password)&#125;<br>    print(data)<br>    req = requests.post(url, data=json.dumps(data), headers=headers)<br>    print(req.text)<br></code></pre></td></tr></table></figure>
+<p>那么在我们的mixly里只需要下面几个积木块就可以实现：<br><img src="https://img-blog.csdnimg.cn/20200425214858384.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br>有了Token码，现在我们就可以调用API中的车牌信息识别：<br><img src="https://img-blog.csdnimg.cn/20200425215125127.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br>在调用车牌识别之前首先我们需要将我们的摄像头和液晶屏幕初始化然后实时拍照将图片上传到AI云平台，通过AI运算把识别到的图片信息以字典的形式发送到MaixPy 主控板上。我们只需要字典中的<code>date</code>数据，里面有车牌号和车牌颜色。如下图所示：<br><img src="https://img-blog.csdnimg.cn/20200425220229163.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"><br>虽然这样子识别到了车牌号，调用API的程序是一直运行的，这时会造成我们的调用次数的减少，虽然每天有10000次的调用量，但也不能经得起这样调用啊，所用我们对程序做了一个小小的优化，加入按键控制进行调用API，（我这里用的是maix DOCK，一个按钮引脚和GPIO16相连，没有板载按钮的可以使用外接按钮）</p>
+<h2 id="程序优化："><a href="#程序优化：" class="headerlink" title="程序优化："></a>程序优化：</h2><p><img src="https://img-blog.csdnimg.cn/20200425221729391.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3RvbnljYXJzb24=,size_16,color_FFFFFF,t_70#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<h2 id="程序演示："><a href="#程序演示：" class="headerlink" title="程序演示："></a>程序演示：</h2><iframe src="//player.bilibili.com/player.html?aid=753079359&bvid=BV1Yk4y1k76d&cid=189015073&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="min-height:600px;width:100%;height:100%;"> </iframe>
+
+
+
+
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/hockel/categories/MaixPy/">MaixPy</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/hockel/tags/MaixPy/">MaixPy</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/hockel/post/16146.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【MaixPy教程】用mixly玩转K210——口罩识别</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/hockel/post/3507.html">
+                        <span class="hidden-mobile">【python学习】-图像和办公文档处理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('twikoo', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/twikoo@0.1.15/dist/twikoo.all.min.js', function () {
+        twikoo.init({ envId: 'hockel-1018a9' })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/hockel/js/debouncer.js" ></script>
+<script  src="/hockel/js/events.js" ></script>
+<script  src="/hockel/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/hockel/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/hockel/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/hockel/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/hockel/js/boot.js" ></script>
+
+
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>

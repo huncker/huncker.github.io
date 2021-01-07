@@ -1,0 +1,555 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/hockel/img/panda.png">
+  <link rel="icon" type="image/png" href="/hockel/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Hockel">
+  <meta name="keywords" content="">
+  <title>【一起DIY】吞币机器人 - Hockel&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/hockel/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/hockel/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"gitee.com","root":"/hockel/","version":"1.8.7","typing":{"enable":true,"typeSpeed":100,"cursorChar":"❤","loop":true},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/hockel/js/utils.js" ></script>
+  <script  src="/hockel/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/hockel/">&nbsp;<strong>Hockel's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/hockel/img/2.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="【一起DIY】吞币机器人">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-05 22:05" pubdate>
+        2021年1月5日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      841 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      8
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【一起DIY】吞币机器人</h1>
+            
+            <div class="markdown-body">
+              <h2 id="项目源起"><a href="#项目源起" class="headerlink" title="项目源起"></a>项目源起</h2><p>一个小小的存钱罐，承载着的是对与童年的回忆。存钱罐也是家庭中用来存放散乱零钱的常用工具。最近有个存钱罐红遍了网络，受到很多人青睐，不仅仅唤起对童年存钱罐的幻想，还纷纷购买，那就是无脸男自动吞币存钱罐。<br><img src="https://img-blog.csdnimg.cn/img_convert/8976affe13762c0aa1cc6f1a78f0b8b2.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<h2 id="项目展示"><a href="#项目展示" class="headerlink" title="项目展示"></a>项目展示</h2><p><img src="https://img-blog.csdnimg.cn/img_convert/1f8006b552cee99092ea61ce4e2f3807.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>未放硬币时嘴巴闭合,不工作<br><img src="https://img-blog.csdnimg.cn/img_convert/87b24292ca60a8498b5bbc72587b322e.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>放置硬币后，缓缓张开“嘴巴”，吞下硬币</p>
+<h2 id="硬件清单"><a href="#硬件清单" class="headerlink" title="硬件清单"></a>硬件清单</h2><table>
+<thead>
+<tr>
+<th>硬件名称</th>
+<th>数量</th>
+<th>购买链接</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>microbit</td>
+<td>1</td>
+<td><a target="_blank" rel="noopener" href="https://www.dfrobot.com.cn/goods-1434.html">链接  </a></td>
+</tr>
+<tr>
+<td>micro:bit 电机驱动扩展板</td>
+<td>1</td>
+<td><a target="_blank" rel="noopener" href="https://www.dfrobot.com.cn/goods-1730.html"> 链接 </a></td>
+</tr>
+<tr>
+<td>9G 舵机</td>
+<td>1</td>
+<td><a target="_blank" rel="noopener" href="https://www.dfrobot.com.cn/goods-214.html">链接</a></td>
+</tr>
+<tr>
+<td>模拟环境光线传感器</td>
+<td>1</td>
+<td><a target="_blank" rel="noopener" href="https://www.dfrobot.com.cn/goods-75.html">链接</a></td>
+</tr>
+<tr>
+<td>吞币机器人切割外形</td>
+<td>1</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<h2 id="制作过程"><a href="#制作过程" class="headerlink" title="制作过程"></a>制作过程</h2><p><strong>1、吞币原理</strong></p>
+<p>连杆结构：又称低副机构，是机械的组成部分中的一类，指由若干（两个以上）有确定相对运动的构件用低副（转动副或移动副）联接组成的机构,如下图<br><img src="https://img-blog.csdnimg.cn/img_convert/534364cb76ea09a0471562aa3ae2ff55.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>当硬币放置到“盘子”上时，会遮盖住光线传感器，因此光线传感器检测的亮度会发生变化，当达到一定值时，控制舵机角度变化，即可吞下硬币！<br><strong>2.结构设计</strong><br>吞币机器人结构设计上，采用了Lasermake中的快速造盒功能配合并集、交集等多种指令制作。Microbit和拓展版可以从底部安装<br><img src="https://img-blog.csdnimg.cn/img_convert/43f1becd9d50f9c35f0d28faed526d17.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p><strong>3.相关设置</strong><br>1）编程环境部署</p>
+<p>程序编写使用的是Mind+编程软件，此项目程序编写涉及到的硬件有microbit 、光线传感器、和9g舵机，因此在编写程序前先将这些拓展指令模块添加上。</p>
+<p>第一步：打开Mind+鼠标点击扩展按钮<br><img src="https://img-blog.csdnimg.cn/img_convert/3fa1d5b3c7a1686d4dca09c54324a7e0.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>第二步：切换“主控板”页面，如下图8处，添加microbit<br><img src="https://img-blog.csdnimg.cn/img_convert/761635055dae916f174a77e87622b113.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p><strong>4.电路连线</strong><br><img src="https://img-blog.csdnimg.cn/img_convert/14591bdea6725f032cdeaf96a40fa734.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>** 5.设备组装**<br>第一步：   将盒子的三个面拼接好，注意将底部与前方留出来。<br><img src="https://img-blog.csdnimg.cn/img_convert/0556a061872c601d2577902a19179dc4.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>第二步：    将舵机固定在盒子的侧方，并将数据线通过孔放置在盒子下方区域。<br><img src="https://img-blog.csdnimg.cn/img_convert/052f4d67c73f3bd4b8dfbe3737838c7c.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>第三步：    将两边的支架通过螺丝以及舵机进行固定。<br><img src="https://img-blog.csdnimg.cn/img_convert/f3f88f83f061a6df7ba15cd41078eb85.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>第四步：     用胶枪将光线传感器固定在支架上安装在盒子前方<br><img src="https://img-blog.csdnimg.cn/img_convert/bf7cf956544dd2bcc74ca8ded4d094cc.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>第五步：     将microbit与传感器引脚连接好，并固定在下方盒子上<br><a target="_blank" rel="noopener" href="https://mc.dfrobot.com.cn/data/attachment/album/202101/05/202946x27k22au6vxz19jl.jpg">https://mc.dfrobot.com.cn/data/attachment/album/202101/05/202946x27k22au6vxz19jl.jpg</a><br>第六步：组装盒子其他部分，若连接松动，可用胶枪固定。完成项目。注意底部的盒子不要固定，方便进行项目调节<br><img src="https://img-blog.csdnimg.cn/img_convert/395f4938e69c741f0ca458220c8dcd98.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p><strong>6.代码编写</strong></p>
+<p>准备工作：</p>
+<p>代码编写： ① 将角度值设为变量，并设置初始值。<br><img src="https://img-blog.csdnimg.cn/img_convert/79c22d0fb86bd5941406433666ad2815.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>② 当角度值为100°时，会以1为幅度增加角度值，直到角度达到150度，同理，当角度值达到150°时，以-1为幅度恢复到100度。</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/47ef9736798d1377f2bc1f7f0b5d8f76.png#pic_center" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>③选择当环境光线值检测到硬币，也就是小于一定值时舵机转一定的角度，随后回复原位。<br><img src="https://img-blog.csdnimg.cn/img_convert/fb1785cc981247cebd67d5f963e9b584.png" srcset="/hockel/img/loading.gif" alt="在这里插入图片描述"></p>
+<h2 id="改进与提升"><a href="#改进与提升" class="headerlink" title="改进与提升"></a>改进与提升</h2><p>结构上还是初代产品，目前只实现了吞硬币的操作，没有预留取硬币的开口，光线传感器检测有无硬币有些不妥，后面慢慢改进。更多项目制作教程欢迎关注个人博客：<a target="_blank" rel="noopener" href="http://www.hockel.club/">www.hockel.club</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/hockel/categories/%E5%88%9B%E5%AE%A2%E9%A1%B9%E7%9B%AE%E6%95%99%E7%A8%8B/">创客项目教程</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/hockel/tags/microbit/">microbit</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/hockel/post/59438.html">
+                        <span class="hidden-mobile">【一起DIY】抢十秒器</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('twikoo', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/twikoo@0.1.15/dist/twikoo.all.min.js', function () {
+        twikoo.init({ envId: 'hockel-1018a9' })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/hockel/js/debouncer.js" ></script>
+<script  src="/hockel/js/events.js" ></script>
+<script  src="/hockel/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/hockel/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/hockel/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/hockel/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/hockel/js/boot.js" ></script>
+
+
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>

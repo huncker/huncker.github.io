@@ -1,0 +1,564 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/hockel/img/panda.png">
+  <link rel="icon" type="image/png" href="/hockel/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Hockel">
+  <meta name="keywords" content="">
+  <title>01掌控板Blynk——点亮板载RGB灯 - Hockel&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/hockel/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/hockel/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"gitee.com","root":"/hockel/","version":"1.8.7","typing":{"enable":true,"typeSpeed":100,"cursorChar":"❤","loop":true},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/hockel/js/utils.js" ></script>
+  <script  src="/hockel/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/hockel/">&nbsp;<strong>Hockel's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/hockel/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/hockel/img/2.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="01掌控板Blynk——点亮板载RGB灯">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-11-29 22:09" pubdate>
+        2019年11月29日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      13
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">01掌控板Blynk——点亮板载RGB灯</h1>
+            
+            <div class="markdown-body">
+              <h1 id="第一章：掌控板Blynk-——点亮板载RGB灯"><a href="#第一章：掌控板Blynk-——点亮板载RGB灯" class="headerlink" title="第一章：掌控板Blynk ——点亮板载RGB灯"></a>第一章：掌控板Blynk ——点亮板载RGB灯</h1><h2 id="一、认识我们的mpython"><a href="#一、认识我们的mpython" class="headerlink" title="一、认识我们的mpython"></a>一、认识我们的mpython</h2><h3 id="1、什么是mPython？"><a href="#1、什么是mPython？" class="headerlink" title="1、什么是mPython？"></a>1、什么是mPython？</h3><p><strong><em>它是为掌控板而生</em></strong></p>
+<p><strong><em>改变传统Python教学</em></strong></p>
+<p>mPython是一款专用于掌控板的编程教育软件，给掌控板“注入”你想实现的功能，它可以让你从图像化编程入手，进而轻松掌握Python编程语言。<a target="_blank" rel="noopener" href="https://mpythonsoftware.readthedocs.io/zh/latest/mPython.html#">具体的详细介绍可以查看官网mPython使用说明文档</a></p>
+<p>这里我就不详细介绍了！</p>
+<h3 id="2、下载mPython"><a href="#2、下载mPython" class="headerlink" title="2、下载mPython"></a>2、下载mPython</h3><p><a target="_blank" rel="noopener" href="https://www.labplus.cn/software">点击下载链接</a>选择mPyhton下载即可，如下图所示：</p>
+<p><img src="https://i.loli.net/2019/11/29/gADfyBCtHPaOXKV.png" srcset="/hockel/img/loading.gif"></p>
+<p>点击我们的下载的mPython软件,傻瓜式安装，一直下一步即可。</p>
+<p><img src="https://i.loli.net/2019/11/29/PN2mGlrKM4ueUsL.png" srcset="/hockel/img/loading.gif"></p>
+<p>打开我们的mPython,可以看到我们的界面：</p>
+<p><img src="https://i.loli.net/2019/11/29/DlToqvxcp2X3wGJ.png" srcset="/hockel/img/loading.gif"></p>
+<h2 id="二、认识我们的Blynk"><a href="#二、认识我们的Blynk" class="headerlink" title="二、认识我们的Blynk"></a>二、认识我们的Blynk</h2><h3 id="1、什么是Blynk？"><a href="#1、什么是Blynk？" class="headerlink" title="1、什么是Blynk？"></a>1、什么是Blynk？</h3><p>Blynk是一个与硬件无关的物联网平台，具有可定制的移动应用程序、私有云、规则引擎和设备管理分析仪表盘。</p>
+<p>在blynk平台中，通过可视化拖拽，你就能创建一个可发布到Google play或App Store的应用。blynk开源了若干项目，开源地址在 github.com/blynkkk，如果担心自己的数据安全，可以自行搭建server。blynk默认支持400多款硬件，其中很多是开源硬件，所有的硬件驱动，blynk都开源出来了！</p>
+<p>blynk几乎一条龙服务，帮助你构建自己的物联网产品。</p>
+<h3 id="2、安装并配置我们的Blynk程序"><a href="#2、安装并配置我们的Blynk程序" class="headerlink" title="2、安装并配置我们的Blynk程序"></a>2、安装并配置我们的Blynk程序</h3><p>安卓用户可以点击下方链接进行下载，（链接: <a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1GHZeUCZvjnzntSsdZmd3Hw">https://pan.baidu.com/s/1GHZeUCZvjnzntSsdZmd3Hw</a> 提取码: ewcs ），iOS用户可以在App Store 中搜索Blynk并安装。</p>
+<p>我们现在打开blynk点击创建一个新的账号（Create New Account）如下图所示：</p>
+<p><img src="https://i.loli.net/2019/11/29/hnyzI4dC73giZc9.png" srcset="/hockel/img/loading.gif"></p>
+<p>输入自己的邮箱(Email)和密码(Password),如下图所示：</p>
+<p><img src="https://i.loli.net/2019/11/29/4R5PpNUw9SiTugl.png" srcset="/hockel/img/loading.gif"></p>
+<p>由于这个app是国外开发的默认是国外服务器（网络状态与电池能力不是很OK）！所以我们选择国内的服务器（116.62.49.166 端口：9443）如下图所示：</p>
+<p><img src="https://i.loli.net/2019/11/29/H4Aw2ZKoVxBYDRE.png" srcset="/hockel/img/loading.gif"></p>
+<p>点击登录（Sign up）就可以登录我们的主界面啦！</p>
+<p><img src="https://i.loli.net/2019/11/29/RwZpdKP4e57F2vo.png" srcset="/hockel/img/loading.gif"></p>
+<h2 id="三、新建一个项目（new-Project"><a href="#三、新建一个项目（new-Project" class="headerlink" title="三、新建一个项目（new Project)"></a>三、新建一个项目（new Project)</h2><p>我们在blynk app注册好我们的账号后，点击新建项目（New Project）如下图所示：</p>
+<p><img src="https://i.loli.net/2019/11/29/QaCt9JwNlhkr6oI.png" srcset="/hockel/img/loading.gif"></p>
+<p>选择主控板（choose Device）:ESP32 Dev Board</p>
+<p><img src="https://i.loli.net/2019/11/29/qPj54aMXfuxh7k6.png" srcset="/hockel/img/loading.gif"></p>
+<p>选择连接类型（connection type）:这里面有有六种连接方式，默认是WiFi，根据自己需求选择相应的连接方式这里我们的掌控板选择的是WiFi连接：</p>
+<p><img src="https://i.loli.net/2019/11/29/f4UFuJ9cdeans1g.png" srcset="/hockel/img/loading.gif"></p>
+<p>主题（theme）：黑色（dark）根据个人喜好选择自己喜欢的主题。</p>
+<p>点击创建（Create）我们的项目就创建好了，我们的blynk服务器就会发一条授权码给我们的邮箱。这个时候我们登陆我们的邮箱就可以看到有一封新的邮件：</p>
+<p><img src="https://i.loli.net/2019/11/29/torpSQhW612Txab.png" srcset="/hockel/img/loading.gif"></p>
+<p>这个时候我们点击查看我们邮件就可以看到第一条的授权码，我们复制一下（后面会有用到的）：</p>
+<p><img src="https://i.loli.net/2019/11/29/tySvj7lBmEgKOZp.png" srcset="/hockel/img/loading.gif"></p>
+<h2 id="四、创建设备"><a href="#四、创建设备" class="headerlink" title="四、创建设备"></a>四、创建设备</h2><p>这个时候我们进入我们的点亮板载RGB灯上面有一栏菜单栏分别是：退出，项目名称，设置，添加组件，运行项目。具体如下图所示：</p>
+<p><img src="https://i.loli.net/2019/11/29/UwiCIZ8VWQhJLdm.png" srcset="/hockel/img/loading.gif"></p>
+<p>把我们之前邮箱的授权码手机复制一下，然后点击菜单栏中的设置，选择auth tokens中的Copyall:</p>
+<p><img src="https://i.loli.net/2019/11/29/T7E6mw8iRDtZhPu.png" srcset="/hockel/img/loading.gif"></p>
+<p>我们点击菜单栏中的添加组件，可以看到有很多的组件，我们选择按钮（Button）组件。（ps:这里每一个组件都是需要能量的，因为我们用力国内的服务器，所以会有20000的电量，如果选择官方的只有2000电量。)</p>
+<p><img src="https://i.loli.net/2019/11/29/GB1m2i63ovJRnkM.png" srcset="/hockel/img/loading.gif"></p>
+<p>选择按钮后，我们的项目界面中就会出现一个按钮的组件，如下图：</p>
+<p><img src="https://i.loli.net/2019/11/29/E8UWYIahGsOrmw1.png" srcset="/hockel/img/loading.gif"></p>
+<p>这个时候我们点击一下我们的按钮组件，就可以按钮组件进行编辑可以设置button的名称：开关，输出方式（output）：选择虚拟引脚VO，模式（MODE）选择（switch）具体操作如下图所示：</p>
+<p><img src="https://i.loli.net/2019/11/29/TxFmAKjGnlevhIf.png" srcset="/hockel/img/loading.gif"></p>
+<p>这个我们的按钮组件就设置完成啦，点击运行就OK啦！</p>
+<h2 id="五、程序编写"><a href="#五、程序编写" class="headerlink" title="五、程序编写"></a>五、程序编写</h2><p>现在我们来编写一下我们的m程序，首先需要添加扩展–&gt;应用扩展–&gt;Blynk</p>
+<p><img src="https://i.loli.net/2019/11/29/jEaMbhl6vywdOpo.png" srcset="/hockel/img/loading.gif"></p>
+<p>在WiFi指令中选择连接wifi名称积木块，这个积木块可以让我们的掌控板连接到我们的WiFi。</p>
+<p><img src="https://i.loli.net/2019/11/29/wSBeT5No8l1fs2I.png" srcset="/hockel/img/loading.gif"></p>
+<p>在扩展指令选择我们新添加的blynk指令中的设置和虚拟管教等积木块。</p>
+<p>Blynk服务器填写：116.62.49.166，端口：8080（不需要更改）。授权码写我们邮箱中的授权码。</p>
+<p><img src="https://s1.ax1x.com/2020/03/31/GQy2pn.png" srcset="/hockel/img/loading.gif" alt="程序代码"></p>
+<p>上传我们的程序到我们的掌控板上，我们控制台也会显示我们的WiFi、Blynk连接情况</p>
+<p><img src="https://s1.ax1x.com/2020/03/31/GQyvnK.png" srcset="/hockel/img/loading.gif" alt="上传步骤"></p>
+<h1 id="六、实验效果"><a href="#六、实验效果" class="headerlink" title="六、实验效果"></a>六、实验效果</h1><p>1、按一下我们的blynk button,掌控板灯亮。</p>
+<p><img src="https://s1.ax1x.com/2020/03/31/GQcsRs.png" srcset="/hockel/img/loading.gif" alt="实验效果"></p>
+<p>2、再一次按blynk中的button，掌控板灯灭</p>
+<p><img src="https://s1.ax1x.com/2020/03/31/GQgSWd.png" srcset="/hockel/img/loading.gif" alt="实验效果二"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/hockel/categories/%E6%8E%8C%E6%8E%A7%E6%9D%BF/">掌控板</a>
+                    
+                      <a class="hover-with-bg" href="/hockel/categories/%E6%8E%8C%E6%8E%A7%E6%9D%BF/Blynk/">Blynk</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/hockel/tags/%E6%8E%8C%E6%8E%A7%E6%9D%BF/">掌控板</a>
+                    
+                      <a class="hover-with-bg" href="/hockel/tags/Blynk/">Blynk</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/hockel/post/9190.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【python学习】-语言元素</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/hockel/post/11662.html">
+                        <span class="hidden-mobile">00-掌控板Blynk-——写在前面的话</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments">
+                
+                
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.waitElementVisible('twikoo', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/twikoo@0.1.15/dist/twikoo.all.min.js', function () {
+        twikoo.init({ envId: 'hockel-1018a9' })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/hockel/js/debouncer.js" ></script>
+<script  src="/hockel/js/events.js" ></script>
+<script  src="/hockel/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/hockel/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/hockel/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/hockel/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/hockel/js/boot.js" ></script>
+
+
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
